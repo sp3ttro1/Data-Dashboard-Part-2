@@ -41,3 +41,5 @@ WeatherDash is a React application that displays weather data for major cities u
 ## 🎥 GIF Demo
 
 ![App Demo](./demo.gif)
+
+

@@ -49,7 +49,6 @@ function App() {
   const handleSearchClick = () => {
     setView('search');
   };
-
   return (
     <div className="layout">
       <div className="sidebar">
