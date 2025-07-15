@@ -1,12 +1,43 @@
-# React + Vite
+# 🌍 WeatherDash - World Weather Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+WeatherDash is a React application that displays weather data for major cities using the Weatherbit API. Users can view summary statistics, browse a dynamic list of cities, and search/filter through the dataset.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✅ Required Features Checklist
 
-## Expanding the ESLint configuration
+- ✅ **Dashboard displaying data fetched via API call**  
+  The application fetches weather data from the Weatherbit API.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- ✅ **Dashboard displays at least 10 unique items, one per row**  
+  The dashboard shows weather details for over 10 major cities, with each city represented on its own row.
+
+- ✅ **Each row includes at least two features**  
+  Each row shows:
+  - City name
+  - Weather description
+  - Temperature (°C)
+  - Local time
+
+- ✅ **useEffect React hook and async/await are used**  
+  Data fetching utilizes `useEffect` and `async/await` to handle asynchronous API calls.
+
+- ✅ **Dashboard includes at least three summary statistics about the data**  
+  - User's current city (via IP lookup)
+  - Hottest city (highest temperature among the listed cities)
+  - Coldest city (lowest temperature among the listed cities)
+
+- ✅ **A search bar allows the user to search for an item in the fetched data**  
+  A search input allows users to search by city name.
+
+- ✅ **The search bar correctly filters items in the list, only displaying items matching the search query**  
+  As the user types, the displayed list updates dynamically to show only matching cities.
+
+- ✅ **The dashboard list dynamically updates as the user adjusts the filter**  
+  Search updates dynamically without page reload.
+
+---
+
+## 🎥 GIF Demo
+
+![App Demo](./demo.gif)

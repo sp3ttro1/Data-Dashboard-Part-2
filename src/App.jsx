@@ -1,35 +1,86 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import './App.css';
+import CityList from './CityList';
+import BoxStats from './BoxStats';
+import SearchBar from './SearchBar';
+import majorCities from './cities';
+
+const API_KEY = "b524914287514b9e87023f7687023770";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [weatherData, setWeatherData] = useState([]);
+  const [userCity, setUserCity] = useState(null);
+  const [searchResult, setSearchResult] = useState(null);
+  const [view, setView] = useState('dashboard');
+
+  useEffect(() => {
+    const fetchMajorCitiesWeather = async () => {
+      const data = await Promise.all(majorCities.map(async (city) => {
+        const res = await fetch(`https://api.weatherbit.io/v2.0/current?city=${city}&key=${API_KEY}`);
+        const json = await res.json();
+        return json.data[0];
+      }));
+      setWeatherData(data);
+    };
+
+    const fetchUserCity = async () => {
+      try {
+        const ipRes = await fetch('https://ipapi.co/json/');
+        const ipData = await ipRes.json();
+        const city = ipData.city;
+        setUserCity(city);
+      } catch {
+        setUserCity('Unavailable');
+      }
+    };
+
+    fetchUserCity();
+    fetchMajorCitiesWeather();
+  }, []);
+
+  const hottest = weatherData.reduce((prev, curr) => (curr.temp > prev.temp ? curr : prev), weatherData[0] || {});
+  const coldest = weatherData.reduce((prev, curr) => (curr.temp < prev.temp ? curr : prev), weatherData[0] || {});
+
+  const handleDashboardClick = () => {
+    setSearchResult(null);
+    setView('dashboard');
+  };
+
+  const handleSearchClick = () => {
+    setView('search');
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="layout">
+      <div className="sidebar">
+        <h2>WeatherDash</h2>
+        <button onClick={handleDashboardClick}>Dashboard</button>
+        <button onClick={handleSearchClick}>Search</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+
+      <div className="dashboard">
+        <h1>🌍 World Weather Dashboard 🌍</h1>
+
+        {view === 'dashboard' && (
+          <>
+            <div className="stats-box">
+              <BoxStats title="Your City" value={userCity ? userCity : 'Loading...'} />
+              <BoxStats title="Hottest City" value={hottest?.city_name ? `${hottest.city_name}: ${hottest.temp}°C` : 'Loading...'} />
+              <BoxStats title="Coldest City" value={coldest?.city_name ? `${coldest.city_name}: ${coldest.temp}°C` : 'Loading...'} />
+            </div>
+            <CityList weatherData={weatherData} />
+          </>
+        )}
+
+        {view === 'search' && (
+          <>
+            <SearchBar setSearchResult={setSearchResult} apiKey={API_KEY} />
+            {searchResult && <CityList weatherData={[searchResult]} />}
+          </>
+        )}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
