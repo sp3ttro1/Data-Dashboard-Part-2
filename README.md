@@ -1,45 +1,35 @@
-# 🌍 WeatherDash - World Weather Dashboard
-
-WeatherDash is a React application that displays weather data for major cities using the Weatherbit API. Users can view summary statistics, browse a dynamic list of cities, and search/filter through the dataset.
+# 🌍 WeatherDash - World Weather Dashboard 2
 
 ---
 
-## ✅ Required Features Checklist
+## ✅ Features Checklist
 
-- ✅ **Dashboard displaying data fetched via API call**  
-  The application fetches weather data from the Weatherbit API.
+- ✅ **Clicking on an item in the list view displays more details about it**  
+  Each city name is a clickable link that shows detailed weather information.
 
-- ✅ **Dashboard displays at least 10 unique items, one per row**  
-  The dashboard shows weather details for over 10 major cities, with each city represented on its own row.
+- ✅ **Clicking on an item in the dashboard list navigates to a detail view for that item**  
+  The app uses React Router to navigate to a unique detail page for each city.
 
-- ✅ **Each row includes at least two features**  
-  Each row shows:
-  - City name
-  - Weather description
-  - Temperature (°C)
-  - Local time
+- ✅ **Detail view includes extra information about the item not included in the dashboard view**  
+  The detail view shows extra weather details like humidity, wind speed, and pressure.
 
-- ✅ **useEffect React hook and async/await are used**  
-  Data fetching utilizes `useEffect` and `async/await` to handle asynchronous API calls.
+- ✅ **The same sidebar is displayed in detail view as in dashboard view**  
+  Sidebar remains fixed across all views for consistent navigation.
 
-- ✅ **Dashboard includes at least three summary statistics about the data**  
-  - User's current city (via IP lookup)
-  - Hottest city (highest temperature among the listed cities)
-  - Coldest city (lowest temperature among the listed cities)
+- ✅ **Each detail view of an item has a direct, unique URL link to that item’s detail view page**  
+  Every city has a shareable unique route, e.g., `/detail/london`.
 
-- ✅ **A search bar allows the user to search for an item in the fetched data**  
-  A search input allows users to search by city name.
+- ✅ **The app includes at least two unique charts developed using the fetched data that tell an interesting story**  
+  The dashboard view features a line chart for temperatures and a bar chart for humidity.
 
-- ✅ **The search bar correctly filters items in the list, only displaying items matching the search query**  
-  As the user types, the displayed list updates dynamically to show only matching cities.
+- ✅ **At least two charts should be incorporated into the dashboard view of the site**  
+  Both charts are shown next to the city list on the dashboard view.
 
-- ✅ **The dashboard list dynamically updates as the user adjusts the filter**  
-  Search updates dynamically without page reload.
+- ✅ **Each chart should describe a different aspect of the dataset**  
+  The line chart shows temperature comparisons, and the bar chart shows humidity levels across major cities.
 
 ---
 
 ## 🎥 GIF Demo
 
 ![App Demo](./demo.gif)
-
-

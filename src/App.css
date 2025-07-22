@@ -24,17 +24,19 @@ body {
   margin-bottom: 20px;
 }
 
-.sidebar button {
+.sidebar a {
+  display: block;
   padding: 10px;
-  border: none;
   border-radius: 8px;
   background-color: #4db6ac;
   color: white;
+  text-align: center;
+  text-decoration: none;
   font-size: 1rem;
-  cursor: pointer;
+  margin-bottom: 10px;
 }
 
-.sidebar button:hover {
+.sidebar a:hover {
   background-color: #00897b;
 }
 
@@ -42,11 +44,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: 100vh;
-  padding: 30px;
-  text-align: center;
-  margin-left: 220px;
+  padding: 40px;
+  margin-left: 20px;
 }
 
 h1 {
@@ -68,33 +69,23 @@ h1 {
   text-align: center;
 }
 
-.search-bar {
-  margin-bottom: 30px;
-}
-
-input {
-  padding: 8px;
-  margin-right: 8px;
-}
-
-button {
-  padding: 8px;
+.main-section {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  max-width: 1400px;
 }
 
 .city-section {
-  width: 100%;
-  max-width: 800px;
-}
-
-.city-box {
+  flex: 1;
+  min-width: 550px;
   background: #fff3cd;
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  overflow-x: auto;
 }
 
-table {
+.city-section table {
   width: 100%;
   border-collapse: collapse;
 }
@@ -111,4 +102,90 @@ th {
 
 tbody tr:hover {
   background-color: #fdf6e3;
+}
+
+.charts {
+  flex: 1;
+  min-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.chart-box {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.search-bar {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+input {
+  padding: 10px;
+  width: 250px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+button {
+  padding: 10px 15px;
+  border-radius: 8px;
+  background-color: #4db6ac;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: #00897b;
+}
+
+.detail-view {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 30px;
+  background: #d1e7dd;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.detail-view h2 {
+  margin-bottom: 20px;
+}
+
+.detail-view p {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+a.city-link {
+  color: #4db6ac;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a.city-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 1200px) {
+  .main-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .city-section, .charts {
+    min-width: unset;
+    width: 90%;
+  }
 }

@@ -1,8 +1,11 @@
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './App.css';
 import CityList from './CityList';
 import BoxStats from './BoxStats';
 import SearchBar from './SearchBar';
+import CityDetail from './CityDetail';
+import ChartSection from './ChartSection';
 import majorCities from './cities';
 
 const API_KEY = "b524914287514b9e87023f7687023770";
@@ -41,44 +44,41 @@ function App() {
   const hottest = weatherData.reduce((prev, curr) => (curr.temp > prev.temp ? curr : prev), weatherData[0] || {});
   const coldest = weatherData.reduce((prev, curr) => (curr.temp < prev.temp ? curr : prev), weatherData[0] || {});
 
-  const handleDashboardClick = () => {
-    setSearchResult(null);
-    setView('dashboard');
-  };
-
-  const handleSearchClick = () => {
-    setView('search');
-  };
   return (
-    <div className="layout">
-      <div className="sidebar">
-        <h2>WeatherDash</h2>
-        <button onClick={handleDashboardClick}>Dashboard</button>
-        <button onClick={handleSearchClick}>Search</button>
+    <Router>
+      <div className="layout">
+        <div className="sidebar">
+          <h2>WeatherDash</h2>
+          <Link to="/">Dashboard</Link>
+          <Link to="/search">Search</Link>
+        </div>
+        <div className="dashboard">
+          <Routes>
+            <Route path="/" element={
+              <>
+                <h1>🌍 World Weather Dashboard 🌍</h1>
+                <div className="stats-box">
+                  <BoxStats title="Your City" value={userCity ? userCity : 'Loading...'} />
+                  <BoxStats title="Hottest City" value={hottest?.city_name ? `${hottest.city_name}: ${hottest.temp}°C` : 'Loading...'} />
+                  <BoxStats title="Coldest City" value={coldest?.city_name ? `${coldest.city_name}: ${coldest.temp}°C` : 'Loading...'} />
+                </div>
+                <div className="main-section">
+                  <CityList weatherData={weatherData} />
+                  <ChartSection weatherData={weatherData} />
+                </div>
+              </>
+            } />
+            <Route path="/search" element={
+              <>
+                <SearchBar setSearchResult={setSearchResult} apiKey={API_KEY} />
+                {searchResult && <CityList weatherData={[searchResult]} />} 
+              </>
+            } />
+            <Route path="/detail/:city" element={<CityDetail apiKey={API_KEY} />} />
+          </Routes>
+        </div>
       </div>
-
-      <div className="dashboard">
-        <h1>🌍 World Weather Dashboard 🌍</h1>
-
-        {view === 'dashboard' && (
-          <>
-            <div className="stats-box">
-              <BoxStats title="Your City" value={userCity ? userCity : 'Loading...'} />
-              <BoxStats title="Hottest City" value={hottest?.city_name ? `${hottest.city_name}: ${hottest.temp}°C` : 'Loading...'} />
-              <BoxStats title="Coldest City" value={coldest?.city_name ? `${coldest.city_name}: ${coldest.temp}°C` : 'Loading...'} />
-            </div>
-            <CityList weatherData={weatherData} />
-          </>
-        )}
-
-        {view === 'search' && (
-          <>
-            <SearchBar setSearchResult={setSearchResult} apiKey={API_KEY} />
-            {searchResult && <CityList weatherData={[searchResult]} />}
-          </>
-        )}
-      </div>
-    </div>
+    </Router>
   );
 }
 
